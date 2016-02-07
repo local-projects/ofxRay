@@ -52,13 +52,7 @@ namespace ofxRay {
 			return;
 	
 		ofPushStyle();
-		ofEnableSmoothing();
 		ofSetColor(color);
-	
-		ofPushMatrix();
-		ofTranslate(s);
-		ofDrawSphere(0.01);
-		ofPopMatrix();
 	
 		if (infinite) {
 			//'infinite' line
@@ -73,12 +67,11 @@ namespace ofxRay {
 			}
 		
 		
-			ofSetLineWidth(width==0.0f ? 1.0f : width);
 			ofDrawLine(s-1000*t, s+1000*t);
 		}
 	
 		//arrow
-		ofDrawArrow(s, s+t);
+		ofDrawArrow(s, s+t, 5);
 	
 		ofPopStyle();
 	}
