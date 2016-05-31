@@ -24,7 +24,7 @@ ostream& operator<<(ostream & os, const ofxRay::Projector & projector) {
 	os << ";\n";
 	os << projector.lensOffset;
 	os << ";\n";
-	os << projector.defaultNear << ", " << projector.defaultFar;
+	os << projector.nearClip << ", " << projector.farClip;
 	os << ";\n";
 	os << projector.getClippedProjectionMatrix();
 	os << ";\n";
@@ -66,9 +66,9 @@ istream& operator>>(istream & is, ofxRay::Projector & projector) {
 		is.ignore(2);
 		is >> projector.lensOffset;
 		is.ignore(2);
-		is >> projector.defaultNear;
+		is >> projector.nearClip;
 		is.ignore(2);
-		is >> projector.defaultFar;
+		is >> projector.farClip;
 		is.ignore(2);
 		is >> projector.projection;
 		is.ignore(2);
@@ -85,8 +85,6 @@ istream& operator>>(istream & is, ofxRay::Projector & projector) {
 
 namespace ofxRay {
 	ofMesh* Projector::drawBox = 0;
-	float Projector::defaultNear = 0.5;
-	float Projector::defaultFar = 20.0f;
 
 	Projector::Projector(int width, int height) {
 		*this = Projector(2.0f, ofVec2f(0.0f, 0.5f), width, height);
@@ -112,8 +110,8 @@ namespace ofxRay {
 		ofSetLineWidth(3.0f);
 	
 		ofPushMatrix();
-		glMultMatrixf(getViewMatrix().getInverse().getPtr());
-		glMultMatrixf(getClippedProjectionMatrix().getInverse().getPtr());
+		ofMultMatrix(getViewMatrix().getInverse());
+		ofMultMatrix(getClippedProjectionMatrix().getInverse());
 		drawBox->draw();
 		ofDrawLine(ofVec3f(0.0f,0.0f,-1.0f), ofVec3f(2.0f,0.0f,-1.0f));
 		ofDrawLine(ofVec3f(0.0f,0.0f,-1.0f), ofVec3f(0.0f,2.0f,-1.0f));
@@ -298,8 +296,8 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
 
 	ofMatrix4x4 Projector::getClippedProjectionMatrix() const {
 		if ( this->isProjectionMatrixInfinite() ) {
-			const float n(defaultNear);
-			const float f(defaultFar);
+			const float n(this->nearClip);
+			const float f(this->farClip);
 			ofMatrix4x4 projection = this->getProjectionMatrix();
 			projection(2, 2) *= (f + n) / (f - n);
 			projection(3, 2) = - (f * n / (f - n));
@@ -337,7 +335,7 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
 
 		texture.bind();
 		ofPushMatrix();
-		glMultMatrixf(inversed.getPtr());
+		ofMultMatrix(inversed);
 		plane.draw();
 		ofPopMatrix();
 		texture.unbind();
@@ -345,14 +343,14 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
 	
 	void Projector::beginAsCamera(bool flipY) const {
 		ofPushView();
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+		ofSetMatrixMode(ofMatrixMode::OF_MATRIX_PROJECTION);
+		ofLoadIdentityMatrix();
 		if (flipY) {
-			glScalef(1.0f, -1.0f, 1.0f);
+			ofScale(1.0f, -1.0f, 1.0f);
 		}
-		glMultMatrixf(getClippedProjectionMatrix().getPtr());
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(getViewMatrix().getPtr());
+		ofMultMatrix(getClippedProjectionMatrix());
+		ofSetMatrixMode(ofMatrixMode::OF_MATRIX_MODELVIEW);
+		ofLoadMatrix(getViewMatrix());
 	}
 	
 	void Projector::endAsCamera() const {
@@ -427,12 +425,12 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
 		result *= ofVec2f(this->width, this->height) / 2.0f;
 		return result;
 	}
-	
-	void Projector::setDefaultNear(float defaultNear) {
-		Projector::defaultNear = defaultNear;
+
+	void Projector::setNearClip(float nearClip) {
+		this->nearClip = nearClip;
 	}
-	
-	void Projector::setDefaultFar(float defaultFar) {
-		Projector::defaultFar = defaultFar;
+
+	void Projector::setFarClip(float farClip) {
+		this->farClip = farClip;
 	}
 }
