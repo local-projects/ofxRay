@@ -4,7 +4,7 @@
 void ofApp::setup(){
 	ofBackground(100, 100, 100);
 	ofEnableSmoothing();
-	camera.setCursorDraw(true);
+	camera.setCursorDrawEnabled(true);
 	
 	data.insert(pair<string, float&>("position.x", position.x));
 	data.insert(pair<string, float&>("position.y", position.y));
@@ -107,7 +107,7 @@ void ofApp::keyPressed(int key){
 	
 	
 	if (key=='c')
-		camera.toggleCursorDraw();
+		camera.toggleCursorDrawEnabled();
 	if (key=='f')
 		ofToggleFullscreen();
 }
