@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(100, 100, 100);
-	ofEnableSmoothing();
-	camera.setCursorDraw(true);
+	//ofEnableSmoothing();
+	camera.setCursorDrawEnabled(true);
 	
 	plane = ofPlane(ofVec3f(1,1,0), ofVec3f(1,0,-1), ofVec3f(0,1,0), ofVec2f(3,2));
 	ray.randomise();
@@ -22,7 +22,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	i+=32;
+	i+=128;
 	if (i >= projector.getWidth()) {
 		i = 0;
 		j++;
@@ -131,7 +131,7 @@ void ofApp::keyPressed(int key){
 	}
 	
 	if (key=='c')
-		camera.toggleCursorDraw();
+		camera.toggleCursorDrawEnabled();
 	
 	if (key==OF_KEY_UP) {
 		if (drawEnabledCursor == drawEnabled.begin())

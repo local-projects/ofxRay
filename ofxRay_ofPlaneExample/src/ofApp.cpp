@@ -4,7 +4,7 @@
 void ofApp::setup(){
 	ofBackground(100, 100, 100);
 	ofEnableSmoothing();
-	camera.setCursorDraw(true);
+	camera.setCursorDrawEnabled(true);
 	
 	data.insert(pair<string, ofVec3f&>("center", center));
 	data.insert(pair<string, ofVec3f&>("normal", normal));
@@ -96,8 +96,6 @@ void ofApp::keyPressed(int key){
 	updatePlane();
 	
 	
-	if (key=='c')
-		camera.toggleCursorDraw();
 	if (key=='f')
 		ofToggleFullscreen();
 	

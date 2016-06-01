@@ -119,8 +119,9 @@ void ofApp::updateProjector()	{
 	projector.setProjection(this->throwRatio, this->lensOffset);
 	projector.setPosition(this->position);
 	pixels.clear();
-	for (int i=0; i<this->resolution.x; i+=32)
-		for(int j=0; j<this->resolution.y; j+=32)
+	int step = 256;
+	for (int i=0; i<this->resolution.x; i+=step)
+		for(int j=0; j<this->resolution.y; j+=step)
 			pixels.push_back(ofVec2f(i, j));
 	projector.castPixels(pixels, rays);
 }

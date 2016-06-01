@@ -71,7 +71,7 @@ namespace ofxRay {
 		}
 	
 		//arrow
-		ofDrawArrow(s, s+t, 5);
+		ofDrawArrow(s, s+t, 0.005);
 	
 		ofPopStyle();
 	}
