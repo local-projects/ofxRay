@@ -288,7 +288,6 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
         return lensOffset;
     }
 
-
 	bool Projector::isProjectionMatrixInfinite() const {
 		return this->projection(3, 2) == 0.0f;
 	}
