@@ -11,7 +11,13 @@
 ostream& operator<<(ostream & os, const ofxRay::Projector & projector) {
 	const auto & node = (ofNode &)projector;
 
+	#ifdef GLM_SWIZZLE //handle the new GLM of stuff
+	os << glm::to_string(node.getOrientationQuat()); // handle that no oF serialisation operator for quat
+
+	#else
 	os << node.getOrientationQuat().asVec4(); // handle that no oF serialisation operator for quat
+	#endif
+
 	os << ";\n";
 	os << node.getPosition();
 	os << ";\n";
@@ -45,6 +51,7 @@ istream& operator>>(istream & is, ofxRay::Projector & projector) {
 		ofVec3f position;
 		ofMatrix4x4 transform;
 
+		//TODO this will break! no reading the quaternion properly!
 		is >> (ofVec4f&) orientation; // handle that no oF serialisation operator for quat
 		is.ignore(2);
 		is >> position;
@@ -287,7 +294,11 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
 	}
 
 	ofMatrix4x4 Projector::getViewMatrix() const {
+		#ifdef GLM_SWIZZLE //handle the new GLM of stuff
+		return glm::inverse(this->getGlobalTransformMatrix());
+		#else
 		return this->getGlobalTransformMatrix().getInverse();
+		#endif
 	}
 
 	ofMatrix4x4 Projector::getProjectionMatrix() const {
