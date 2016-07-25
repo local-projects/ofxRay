@@ -276,8 +276,13 @@ namespace ofxRay {
 	void Plane::makeGrid() {
 		if (viewGrid != 0)
 			return;
-	
+
+		#ifdef GLM_SWIZZLE
+		vector<ofDefaultVec3> vertices((2.0f / 0.25 + 1)*4);
+		#else
 		vector<ofVec3f> vertices((2.0f / 0.25 + 1)*4);
+		#endif
+
 		int i=0;
 		for (float y=-1.0f; y<=1.0f; y+=0.25f) {
 			vertices[i++] = ofVec3f(-1.0f, y, 0.0f);

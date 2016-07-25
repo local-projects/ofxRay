@@ -370,8 +370,13 @@ rays.push_back(Ray(s, t, ofColor(255.0f * (it->x + 1.0f) / 2.0f, 255.0f * (it->y
 	void Projector::makeBox() {
 		if (drawBox != 0)
 			return;
-	
+
+		#ifdef GLM_SWIZZLE
+		vector<ofDefaultVec3> vertices;
+		#else
 		vector<ofVec3f> vertices;
+		#endif
+
 		vertices.push_back(ofVec3f(-1, -1, -1));
 		vertices.push_back(ofVec3f(-1, -1, +1));
 		vertices.push_back(ofVec3f(-1, +1, +1));
