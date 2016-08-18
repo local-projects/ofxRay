@@ -114,7 +114,7 @@ namespace ofxRay {
 	void Projector::draw() const {
 		ofPushStyle();
 		ofSetColor(color);
-		ofSetLineWidth(3.0f);
+		ofSetLineWidth(2.0f);
 	
 		ofPushMatrix();
 		ofMultMatrix(getViewMatrix().getInverse());
