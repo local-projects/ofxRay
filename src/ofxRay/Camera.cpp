@@ -8,6 +8,7 @@
 
 #include "ofxRay/Camera.h"
 
+#ifndef TARGET_WIN32
 ostream& operator<<(ostream & os, const ofxRay::Camera & camera) {
 	os << camera.distortion.size();
 	os << ": ";
@@ -45,6 +46,7 @@ istream& operator>>(istream & is, ofxRay::Camera & camera) {
 
 	return is;
 }
+#endif
 
 namespace ofxRay {
 	Camera::Camera() :

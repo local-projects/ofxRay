@@ -23,8 +23,10 @@ namespace ofxRay {
 		
 		ofVec2f undistortCoordinate(const ofVec2f & xy) const;
 		vector<float> distortion;
-
+		
+#ifndef TARGET_WIN32
 		friend ostream & (::operator<<) (ostream &, const Camera &);
 		friend istream & (::operator>>) (istream &, Camera &);
+#endif
 	};
 }
