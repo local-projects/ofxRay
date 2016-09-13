@@ -61,7 +61,8 @@ istream& operator>>(istream & is, ofxRay::Projector & projector) {
 
 		node.setOrientation(orientation);
 		node.setPosition(position);
-		node.setTransformMatrix(transform);
+		//node.setTransformMatrix(transform);
+		ofLogError("ofxRay::Projector") << " operator>> not implemented! todo!";
 	}
 	
 	{

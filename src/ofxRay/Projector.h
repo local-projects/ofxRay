@@ -81,7 +81,8 @@ namespace ofxRay {
         
         
 		void setView(const ofMatrix4x4& m) {
-			ofNode::setTransformMatrix(m.getInverse());
+			//ofNode::setTransformMatrix(m.getInverse()); //TODO adapt to new OF api for ofnode!
+			ofLogError("ofxRay::Projector") << "setView() not implemented! todo!";
 		}
 
 		void setProjection(float throwRatio, const ofVec2f& lensOffset);
