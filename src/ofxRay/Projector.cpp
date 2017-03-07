@@ -121,7 +121,7 @@ namespace ofxRay {
 		ofMultMatrix(getViewMatrix().getInverse());
 		ofMultMatrix(getClippedProjectionMatrix().getInverse());
 		drawBox->draw();
-		ofDrawLine(ofVec3f(0.0f,1.0f,1.0f), ofVec3f(0.0f,1.0f,1.0001f)); //show the "North" of the camera proj
+		ofDrawLine(ofVec3f(0.0f,1.0f,1.0f), ofVec3f(0.0f,1.0f,0.99975f)); //show the "North" of the camera proj
 
 		ofDrawLine(ofVec3f(0.0f,0.0f,-1.0f), ofVec3f(2.0f,0.0f,-1.0f));
 		ofDrawLine(ofVec3f(0.0f,0.0f,-1.0f), ofVec3f(0.0f,2.0f,-1.0f));
